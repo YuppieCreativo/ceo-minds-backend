@@ -88,7 +88,13 @@ class UserController {
           await updatedRow.save();
 
           return res.status(200).json(userUpdated);
-        } else if (!paymentMethod && !servicePack) {
+        } else if (
+          (!paymentMethod && !servicePack) ||
+          (paymentMethod &&
+            servicePack &&
+            existUser.paymentMethod &&
+            existUser.servicePack)
+        ) {
           return res.status(200).json(existUser);
         }
       }
