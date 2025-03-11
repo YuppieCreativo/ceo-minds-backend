@@ -9,6 +9,8 @@ const userSchema = new Schema<User>(
     role: { type: String, required: true },
     socialMedia: { type: String, required: true },
     comments: { type: String },
+    servicePack: { type: String },
+    paymentMethod: { type: String },
   },
   { timestamps: true }
 );

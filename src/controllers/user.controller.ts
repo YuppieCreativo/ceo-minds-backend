@@ -40,51 +40,123 @@ class UserController {
   }
 
   async create(req: Request, res: Response) {
-    const { fullName, comments, role, email, phone, socialMedia }: UserDTO =
-      req.body;
+    try {
+      const {
+        fullName,
+        comments,
+        role,
+        email,
+        phone,
+        socialMedia,
+        paymentMethod,
+        servicePack,
+      }: UserDTO = req.body;
 
-    const existUser = await this.get(email);
+      const existUser = await this.get(email);
 
-    if (existUser) return res.status(200).json(existUser);
+      if (existUser) {
+        if (
+          (paymentMethod || servicePack) &&
+          !existUser.paymentMethod &&
+          !existUser.servicePack
+        ) {
+          const userUpdated = await this.update(existUser._id.toString(), {
+            paymentMethod,
+            servicePack,
+          });
 
-    const user = new UserModel({
-      fullName,
-      comments,
-      role,
-      email,
-      phone,
-      socialMedia,
-    });
+          const doc = new GoogleSpreadsheet(
+            config.SHEET_ID,
+            serviceAccountAuth
+          );
 
-    const userSaved = await user.save();
+          await doc.loadInfo();
 
-    const doc = new GoogleSpreadsheet(config.SHEET_ID, serviceAccountAuth);
+          const sheet = doc.sheetsByIndex[0];
 
-    await doc.loadInfo();
+          const rows = await sheet.getRows();
 
-    const sheet = doc.sheetsByIndex[0];
+          const updatedRow = rows.find(
+            (row: any) => row.get("Email") === email
+          );
 
-    await sheet.addRow({
-      Nombre: fullName,
-      Email: email,
-      "Phone Number": phone,
-      Cargo: role,
-      "Redes Sociales": socialMedia,
-      Comentarios: comments,
-      "Created At": new Date(`${userSaved.createdAt}`).toUTCString(),
-    });
+          await updatedRow.assign({
+            "Metodo de Pago": paymentMethod,
+            Servicio: servicePack,
+          });
 
-    const { error } = await EmailController.sendEmail({ email });
+          await updatedRow.save();
 
-    if (error) {
-      console.log("Error to send email after create user", error);
+          return res.status(200).json(userUpdated);
+        } else if (!paymentMethod && !servicePack) {
+          return res.status(200).json(existUser);
+        }
+      }
+
+      const userSaved = await this.createUser(req.body);
+
+      if (!userSaved) {
+        return res.status(500).json({ error: "Internal Server Error" });
+      }
+
+      const doc = new GoogleSpreadsheet(config.SHEET_ID, serviceAccountAuth);
+
+      await doc.loadInfo();
+
+      const sheet = doc.sheetsByIndex[0];
+
+      await sheet.addRow({
+        Nombre: fullName,
+        Email: email,
+        "Phone Number": phone,
+        Cargo: role,
+        "Redes Sociales": socialMedia,
+        Comentarios: comments,
+        "Metodo de Pago": paymentMethod,
+        Servicio: servicePack,
+        "Created At": new Date(`${userSaved.createdAt}`).toUTCString(),
+      });
+
+      const { error } = await EmailController.sendEmail({ email });
+
+      if (error) {
+        console.log("Error to send email after create user", error);
+      }
+
+      return res.status(201).json(userSaved);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ error: "Internal Server Error" });
     }
-
-    return res.status(201).json(userSaved);
   }
 
   private async get(email: string): Promise<User | null> {
     return await UserModel.findOne({ email });
+  }
+
+  private async update(
+    _id: string,
+    fields: Partial<Omit<User, "_id">>
+  ): Promise<User | null> {
+    return await UserModel.findByIdAndUpdate(
+      {
+        _id,
+      },
+      {
+        $set: fields,
+      },
+      {
+        new: true,
+      }
+    );
+  }
+
+  private async createUser(
+    user: Partial<Omit<User, "_id">>
+  ): Promise<User | null> {
+    const newUser = new UserModel(user);
+
+    return await newUser.save();
   }
 
   async sinchronize(_req: Request, res: Response) {
@@ -105,6 +177,8 @@ class UserController {
         role: row.get("Cargo"),
         socialMedia: row.get("Redes Sociales"),
         comments: row.get("Comentarios"),
+        paymentMethod: row.get("Metodo de Pago"),
+        servicePack: row.get("Servicio"),
       };
     });
 
@@ -132,6 +206,8 @@ class UserController {
         Cargo: user.role,
         "Redes Sociales": user.socialMedia,
         Comentarios: user.comments,
+        "Metodo de Pago": user.paymentMethod,
+        Servicio: user.servicePack,
         "Created At": new Date(`${user.createdAt}`).toUTCString(),
       });
     }

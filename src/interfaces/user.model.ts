@@ -8,6 +8,8 @@ export interface User {
   role: string;
   socialMedia: string;
   comments: string;
+  servicePack?: string;
+  paymentMethod?: string;
   createdAt: Date;
   updatedAt: Date;
 }
