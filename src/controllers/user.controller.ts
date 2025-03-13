@@ -87,6 +87,12 @@ class UserController {
 
           await updatedRow.save();
 
+          const { error } = await EmailController.sendPricing({ email });
+
+          if (error) {
+            return res.status(500).json({ error });
+          }
+
           return res.status(200).json(userUpdated);
         } else if (
           (!paymentMethod && !servicePack) ||
@@ -124,6 +130,13 @@ class UserController {
       });
 
       const { error } = await EmailController.sendEmail({ email });
+
+      if (userSaved.paymentMethod && userSaved.servicePack) {
+        const { error } = await EmailController.sendPricing({ email });
+        if (error) {
+          return res.status(500).json({ error });
+        }
+      }
 
       if (error) {
         console.log("Error to send email after create user", error);

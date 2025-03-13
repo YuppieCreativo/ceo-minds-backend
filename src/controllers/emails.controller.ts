@@ -9,7 +9,7 @@ class EmailController {
   async sendEmail({ email }: { email: string }) {
     const { error } = await resend.emails.send({
       to: [own_email],
-      from: `${own_email}`,
+      from: "info@ceominds.net",
       subject: "A new person has been added to the CEOminds' database. ",
       html: `
         <!DOCTYPE html>
@@ -207,6 +207,103 @@ class EmailController {
             </body>
         </html>
         `,
+    });
+
+    return { error };
+  }
+
+  async sendPricing({ email }: { email: string }) {
+
+    const { error } = await resend.emails.send({
+      to: [email],
+      from: "info@ceominds.net",
+      subject: "Pricing",
+      html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+            <html dir="ltr" lang="en">
+            <head>
+                <link
+                rel="preload"
+                as="image"
+                href="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/Recurso+1+1.png" />
+                <link
+                rel="preload"
+                as="image"
+                href="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/Ellipse+1.png" />
+                <link
+                rel="preload"
+                as="image"
+                href="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/Group+1171275903.png" />
+                <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+                <meta name="x-apple-disable-message-reformatting" />
+                <!--$-->
+            </head>
+            <div
+                style="display:none;overflow:hidden;line-height:1px;opacity:0;max-height:0;max-width:0">
+                Métodos de pago
+                <div>
+                 ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿
+                </div>
+            </div>
+            <body
+                style='background-color:rgb(0,0,0);margin-top:auto;margin-bottom:auto;margin-left:auto;margin-right:auto;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";padding-left:0.5rem;padding-right:0.5rem'>
+                <table
+                align="center"
+                width="100%"
+                border="0"
+                cellpadding="0"
+                cellspacing="0"
+                role="presentation"
+                style="margin-top:40px;margin-left:auto;margin-right:auto;padding-top:45px;max-width:465px;color:rgb(255,255,255)">
+                <tbody>
+                    <tr style="width:100%">
+                    <td>
+                        <img
+                        alt="CEOMinds Logo"
+                        height="16.565074135"
+                        src="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/Recurso+1+1.png"
+                        style="margin-top:0px;margin-bottom:1.25rem;margin-left:auto;margin-right:auto;display:block;outline:none;border:none;text-decoration:none"
+                        width="120" />
+                        <h1
+                        style="font-weight:200;margin-top:0px;margin-bottom:0px;margin-left:auto;margin-right:auto;text-transform:uppercase;text-align:center;font-size:3.75rem;line-height:1">
+                        MÉTODOS <br />
+                        </h1>
+                        <h1
+                        style="text-transform:uppercase;margin-top:0px;margin-bottom:0px;margin-left:auto;margin-right:auto;text-align:center;font-size:3.75rem;line-height:1;letter-spacing:0.025em">
+                        de pago
+                        </h1>
+                        <img
+                        height="60"
+                        src="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/Ellipse+1.png"
+                        style="margin-top:0.75rem;margin-bottom:0px;margin-left:auto;margin-right:auto;display:block;outline:none;border:none;text-decoration:none"
+                        width="350" />
+                        <table
+                        align="center"
+                        width="100%"
+                        border="0"
+                        cellpadding="0"
+                        cellspacing="0"
+                        role="presentation"
+                        style='background-color:rgb(255,255,255);border-top-left-radius:1.5rem;border-top-right-radius:1.5rem;margin-top:auto;margin-bottom:auto;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";max-width:525px'>
+                        <tbody>
+                            <tr>
+                            <td>
+                                <img
+                                height="465"
+                                src="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/Group+1171275903.png"
+                                style="margin-left:3rem;margin-bottom:0.75rem;margin-top:2rem;display:block;outline:none;border:none;text-decoration:none"
+                                width="525" />
+                            </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </td>
+                    </tr>
+                </tbody>
+                </table>
+                <!--/$-->
+            </body>
+            </html>
+`,
     });
 
     return { error };
