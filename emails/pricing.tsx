@@ -8,6 +8,8 @@ import {
   Preview,
   Tailwind,
   Section,
+  Text,
+  Hr,
 } from "@react-email/components";
 import * as React from "react";
 
@@ -49,7 +51,38 @@ const PricingEmail = () => {
               className="mt-3 mb-0 mx-auto"
             />
 
-            <Section className="bg-white rounded-t-3xl my-auto font-sans max-w-[525px]">
+            <Section className="bg-white rounded-t-3xl my-auto font-sans max-w-[525px] text-black">
+              <Heading as="h2" className="font-medium text-center mt-8">
+                Confirmación de pago <br />
+                <b>de tu membresía</b>
+              </Heading>
+              <Hr className="max-w-[50%] mx-auto h-[0.6px] bg-black" />
+              <Text className="text-center mx-auto text-[16px]">
+                ¡Gracias por asegurar tu membresía con nosotros! Para agilizar
+                la <br />
+                validación de tu pago, puedes reportarlo directamente enviando
+                tus <br /> datos en este mismo correo:
+              </Text>
+              <ul className="list-disc list-inside space-y-2 mx-auto max-w-[75%] px-4 my-6">
+                <li className="font-bold">Número de referencia</li>
+                <li className="font-bold">Monto transferido</li>
+                <li className="font-bold">
+                  {
+                    "Método utilizado (ejm: transferencia, binance, pago móvil, etc)"
+                  }
+                </li>
+              </ul>
+              <Text className="text-center mx-auto text-[16px]">
+                Si tienes dudas o necesitas ayuda, haznos saber. Estamos para{" "}
+                <br /> apoyarte.
+              </Text>
+              <div className="border-2 border-black rounded-full">
+                <Text className="text-center mx-auto text-[14px] ">
+                  <b className="text-xl">¡Esperamos verte pronto!</b> <br />{" "}
+                  Equipo de CEO Minds.
+                </Text>
+              </div>
+              <Hr className="max-w-[50%] mx-auto h-[0.6px] bg-black" />
               <Img
                 src="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/Group+1171275903.png"
                 height={465}

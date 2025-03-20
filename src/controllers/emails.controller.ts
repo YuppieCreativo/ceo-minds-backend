@@ -218,90 +218,133 @@ class EmailController {
       from: "info@ceominds.net",
       subject: "Hola CEO Minder",
       html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-            <html dir="ltr" lang="en">
-            <head>
-                <link
-                rel="preload"
-                as="image"
-                href="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/Recurso+1+1.png" />
-                <link
-                rel="preload"
-                as="image"
-                href="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/Ellipse+1.png" />
-                <link
-                rel="preload"
-                as="image"
-                href="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/Group+1171275903.png" />
-                <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-                <meta name="x-apple-disable-message-reformatting" />
-                <!--$-->
-            </head>
-            <div
-                style="display:none;overflow:hidden;line-height:1px;opacity:0;max-height:0;max-width:0">
-                Métodos de pago
-                <div>
-                 ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿
-                </div>
-            </div>
-            <body
-                style='background-color:rgb(0,0,0);margin-top:auto;margin-bottom:auto;margin-left:auto;margin-right:auto;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";padding-left:0.5rem;padding-right:0.5rem'>
-                <table
-                align="center"
-                width="100%"
-                border="0"
-                cellpadding="0"
-                cellspacing="0"
-                role="presentation"
-                style="margin-top:40px;margin-left:auto;margin-right:auto;padding-top:45px;max-width:465px;color:rgb(255,255,255)">
-                <tbody>
-                    <tr style="width:100%">
-                    <td>
-                        <img
-                        alt="CEOMinds Logo"
-                        height="16.565074135"
-                        src="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/Recurso+1+1.png"
-                        style="margin-top:0px;margin-bottom:1.25rem;margin-left:auto;margin-right:auto;display:block;outline:none;border:none;text-decoration:none"
-                        width="120" />
-                        <h1
-                        style="font-weight:200;margin-top:0px;margin-bottom:0px;margin-left:auto;margin-right:auto;text-transform:uppercase;text-align:center;font-size:3.75rem;line-height:1">
-                        MÉTODOS <br />
-                        </h1>
-                        <h1
-                        style="text-transform:uppercase;margin-top:0px;margin-bottom:0px;margin-left:auto;margin-right:auto;text-align:center;font-size:3.75rem;line-height:1;letter-spacing:0.025em">
-                        de pago
-                        </h1>
-                        <img
-                        height="60"
-                        src="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/Ellipse+1.png"
-                        style="margin-top:0.75rem;margin-bottom:0px;margin-left:auto;margin-right:auto;display:block;outline:none;border:none;text-decoration:none"
-                        width="350" />
-                        <table
-                        align="center"
-                        width="100%"
-                        border="0"
-                        cellpadding="0"
-                        cellspacing="0"
-                        role="presentation"
-                        style='background-color:rgb(255,255,255);border-top-left-radius:1.5rem;border-top-right-radius:1.5rem;margin-top:auto;margin-bottom:auto;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";max-width:525px'>
-                        <tbody>
-                            <tr>
-                            <td>
-                                <img
-                                height="465"
-                                src="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/Group+1171275903.png"
-                                style="margin-left:3rem;margin-bottom:0.75rem;margin-top:2rem;display:block;outline:none;border:none;text-decoration:none"
-                                width="525" />
-                            </td>
-                            </tr>
-                        </tbody>
-                        </table>
-                    </td>
-                    </tr>
-                </tbody>
-                </table>
-                <!--/$-->
-            </body>
-            </html>
+<html dir="ltr" lang="en">
+  <head>
+    <link
+      rel="preload"
+      as="image"
+      href="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/Recurso+1+1.png" />
+    <link
+      rel="preload"
+      as="image"
+      href="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/Ellipse+1.png" />
+    <link
+      rel="preload"
+      as="image"
+      href="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/Group+1171275903.png" />
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <meta name="x-apple-disable-message-reformatting" />
+    <!--$-->
+  </head>
+  <div
+    style="display:none;overflow:hidden;line-height:1px;opacity:0;max-height:0;max-width:0">
+    Métodos de pago
+    <div>
+       ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿
+    </div>
+  </div>
+  <body
+    style='background-color:rgb(0,0,0);margin-top:auto;margin-bottom:auto;margin-left:auto;margin-right:auto;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";padding-left:0.5rem;padding-right:0.5rem'>
+    <table
+      align="center"
+      width="100%"
+      border="0"
+      cellpadding="0"
+      cellspacing="0"
+      role="presentation"
+      style="margin-top:40px;margin-left:auto;margin-right:auto;padding-top:45px;max-width:465px;color:rgb(255,255,255)">
+      <tbody>
+        <tr style="width:100%">
+          <td>
+            <img
+              alt="CEOMinds Logo"
+              height="16.565074135"
+              src="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/Recurso+1+1.png"
+              style="margin-top:0px;margin-bottom:1.25rem;margin-left:auto;margin-right:auto;display:block;outline:none;border:none;text-decoration:none"
+              width="120" />
+            <h1
+              style="font-weight:200;margin-top:0px;margin-bottom:0px;margin-left:auto;margin-right:auto;text-transform:uppercase;text-align:center;font-size:3.75rem;line-height:1">
+              MÉTODOS <br />
+            </h1>
+            <h1
+              style="text-transform:uppercase;margin-top:0px;margin-bottom:0px;margin-left:auto;margin-right:auto;text-align:center;font-size:3.75rem;line-height:1;letter-spacing:0.025em">
+              de pago
+            </h1>
+            <img
+              height="60"
+              src="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/Ellipse+1.png"
+              style="margin-top:0.75rem;margin-bottom:0px;margin-left:auto;margin-right:auto;display:block;outline:none;border:none;text-decoration:none"
+              width="350" />
+            <table
+              align="center"
+              width="100%"
+              border="0"
+              cellpadding="0"
+              cellspacing="0"
+              role="presentation"
+              style='background-color:rgb(255,255,255);border-top-left-radius:1.5rem;border-top-right-radius:1.5rem;margin-top:auto;margin-bottom:auto;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";max-width:525px;color:rgb(0,0,0)'>
+              <tbody>
+                <tr>
+                  <td>
+                    <h2
+                      style="font-weight:500;text-align:center;margin-top:2rem">
+                      Confirmación de pago <br /><b>de tu membresía</b>
+                    </h2>
+                    <hr
+                      style="max-width:50%;margin-left:auto;margin-right:auto;height:0.6px;background-color:rgb(0,0,0);width:100%;border:none;border-top:1px solid #eaeaea" />
+                    <p
+                      style="text-align:center;margin-left:auto;margin-right:auto;font-size:16px;line-height:24px;margin:16px 0">
+                      ¡Gracias por asegurar tu membresía con nosotros! Para
+                      agilizar la <br />validación de tu pago, puedes reportarlo
+                      directamente enviando tus <br />
+                      datos en este mismo correo:
+                    </p>
+                    <ul
+                      class="space-y-2"
+                      style="list-style-type:disc;list-style-position:inside;margin-left:auto;margin-right:auto;max-width:75%;padding-left:1rem;padding-right:1rem;margin-top:1.5rem;margin-bottom:1.5rem">
+                      <li style="font-weight:700">Número de referencia</li>
+                      <li style="font-weight:700">Monto transferido</li>
+                      <li style="font-weight:700">
+                        Método utilizado (ejm: transferencia, binance, pago
+                        móvil, etc)
+                      </li>
+                    </ul>
+                    <p
+                      style="text-align:center;margin-left:auto;margin-right:auto;font-size:16px;line-height:24px;margin:16px 0">
+                      Si tienes dudas o necesitas ayuda, haznos saber. Estamos
+                      para<!-- -->
+                      <br />
+                      apoyarte.
+                    </p>
+                    <div
+                      style="border-width:2px;border-color:rgb(0,0,0);border-radius:9999px">
+                      <p
+                        style="text-align:center;margin-left:auto;margin-right:auto;font-size:14px;line-height:24px;margin:16px 0">
+                        <b style="font-size:1.25rem;line-height:1.75rem"
+                          >¡Esperamos verte pronto!</b
+                        >
+                        <br />
+                        <!-- -->Equipo de CEO Minds.
+                      </p>
+                    </div>
+                    <hr
+                      style="max-width:50%;margin-left:auto;margin-right:auto;height:0.6px;background-color:rgb(0,0,0);width:100%;border:none;border-top:1px solid #eaeaea" />
+                    <img
+                      height="465"
+                      src="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/Group+1171275903.png"
+                      style="margin-left:3rem;margin-bottom:0.75rem;margin-top:2rem;display:block;outline:none;border:none;text-decoration:none"
+                      width="525" />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!--/$-->
+  </body>
+</html>
 `,
     });
 
