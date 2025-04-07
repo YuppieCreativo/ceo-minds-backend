@@ -10,6 +10,7 @@ class EmailController {
     const { error } = await resend.emails.send({
       to: [own_email],
       from: "info@ceominds.net",
+      cc: ["maykerting@gmail.com"],
       subject: "A new person has been added to the CEOminds' database. ",
       html: `
         <!DOCTYPE html>
