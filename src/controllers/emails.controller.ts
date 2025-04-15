@@ -8,9 +8,9 @@ const google_sheet_url = config.google_sheet_url;
 class EmailController {
   async sendEmail({ email }: { email: string }) {
     const { error } = await resend.emails.send({
-      to: [own_email],
+      to: [own_email, "info@ceominds.net"],
       from: "info@ceominds.net",
-      cc: ["maykerting@gmail.com"],
+      cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
       subject: "A new person has been added to the CEOminds' database. ",
       html: `
         <!DOCTYPE html>
