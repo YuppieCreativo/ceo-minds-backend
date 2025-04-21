@@ -115,7 +115,9 @@ class UserController {
 
       await doc.loadInfo();
 
-      const sheet = doc.sheetsByIndex[0];
+      const sheet = doc.sheetsByIndex.find(
+        (sheet: { title: string }) => sheet.title.toLowerCase() === "users"
+      );
 
       await sheet.addRow({
         Nombre: fullName,
@@ -234,6 +236,39 @@ class UserController {
     return res
       .status(200)
       .json({ message: `${usersFiltered.length} new Leads added` });
+  }
+
+  async attendance(req: Request, res: Response) {
+    const user: Pick<User, "email"> = req.body;
+
+    try {
+      const doc = new GoogleSpreadsheet(config.SHEET_ID, serviceAccountAuth);
+
+      await doc.loadInfo();
+
+      const sheet = doc.sheetsByIndex.find(
+        (sheet: { title: string }) => sheet.title.toLowerCase() === "attendance"
+      );
+
+      const rows = await sheet.getRows();
+
+      const userInSheet = rows.find(
+        (row: any) => row.get("Correo") === user.email
+      );
+
+      if (!userInSheet) {
+        return res.status(404).json({ error: "User not found" });
+      }
+
+      userInSheet.set("Asistencia", "Confirmado");
+
+      await userInSheet.save();
+
+      return res.status(200).json({ message: "Attendance confirmed" });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
   }
 }
 

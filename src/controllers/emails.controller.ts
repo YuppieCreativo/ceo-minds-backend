@@ -351,6 +351,18 @@ class EmailController {
 
     return { error };
   }
+
+  async sendAttendance() {
+    const { error } = await resend.emails.send({
+      to: [own_email, "info@ceominds.net"],
+      from: "info@ceominds.net",
+      cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
+      subject: "Attendance",
+      html: ``,
+    });
+
+    return { error };
+  }
 }
 
 export default new EmailController();
