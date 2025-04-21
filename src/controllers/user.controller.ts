@@ -239,7 +239,7 @@ class UserController {
   }
 
   async attendance(req: Request, res: Response) {
-    const user: Pick<User, "email"> = req.body;
+    const user: Pick<User, "email" | "fullName"> = req.body;
 
     try {
       const doc = new GoogleSpreadsheet(config.SHEET_ID, serviceAccountAuth);
@@ -253,7 +253,7 @@ class UserController {
       const rows = await sheet.getRows();
 
       const userInSheet = rows.find(
-        (row: any) => row.get("Correo") === user.email
+        (row: any) => row.get("Correo").trim() === user.email.trim()
       );
 
       if (!userInSheet) {
