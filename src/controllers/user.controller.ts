@@ -264,6 +264,14 @@ class UserController {
 
       await userInSheet.save();
 
+      const { error } = await EmailController.sendAttendance({
+        userEmail: user.email,
+      });
+
+      if (error) {
+        console.log("Error to send email after create user", error);
+      }
+
       return res.status(200).json({ message: "Attendance confirmed" });
     } catch (error) {
       console.log(error);
