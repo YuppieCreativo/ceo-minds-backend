@@ -260,6 +260,12 @@ class UserController {
         return res.status(404).json({ error: "User not found" });
       }
 
+      const currentAttendance = userInSheet.get("Asistencia");
+
+      if (currentAttendance === "Confirmado") {
+        return res.status(400).json({ error: "User already confirmed" });
+      }
+
       userInSheet.set("Asistencia", "Confirmado");
 
       await userInSheet.save();
