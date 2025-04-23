@@ -253,7 +253,9 @@ class UserController {
       const rows = await sheet.getRows();
 
       const userInSheet = rows.find(
-        (row: any) => row.get("Correo").trim() === user.email.trim()
+        (row: any) =>
+          row.get("Correo").trim().toLowerCase() ===
+          user.email.trim().toLowerCase()
       );
 
       if (!userInSheet) {
@@ -271,7 +273,7 @@ class UserController {
       await userInSheet.save();
 
       const { error } = await EmailController.sendAttendance({
-        userEmail: user.email,
+        userEmail: user.email.toLowerCase(),
       });
 
       if (error) {
