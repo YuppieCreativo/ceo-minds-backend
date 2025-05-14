@@ -305,6 +305,39 @@ class UserController {
             return res.status(500).json({ error: "Internal Server Error" });
         }
     }
+
+    async getLastAttendanceList(_req: Request, res: Response) {
+        try {
+            const doc = new GoogleSpreadsheet(
+                config.SHEET_ID,
+                serviceAccountAuth
+            );
+            await doc.loadInfo();
+
+            const sheet = doc.sheetsByIndex.pop();
+
+            const rows = await sheet.getRows();
+
+            const users = rows.map((row: any) => {
+                return {
+                    fullName: row
+                        .get("Nombre y Apellido")
+                        ?.toLowerCase()
+                        ?.trim(),
+                    email: row.get("Correo")?.toLowerCase()?.trim(),
+                };
+            });
+
+            if (!users || users.length === 0) {
+                return res.status(404).json({ error: "Users not found" });
+            }
+
+            return res.status(200).json({ users });
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({ error: "Internal Server Error" });
+        }
+    }
 }
 
 export default new UserController();
