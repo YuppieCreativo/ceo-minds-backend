@@ -288,13 +288,14 @@ class UserController {
 
             await userInSheet.save();
 
-            // const { error } = await EmailController.sendAttendance({
-            //     userEmail: user.email.toLowerCase(),
-            // });
+            const { error } =
+                await EmailController.sendAttendanceEmailCarolinaMontes({
+                    userEmail: user.email.toLowerCase(),
+                });
 
-            // if (error) {
-            //     console.log("Error to send email after create user", error);
-            // }
+            if (error) {
+                console.log("Error to send email after create user", error);
+            }
 
             return res.status(200).json({ message: "Attendance confirmed" });
         } catch (error) {

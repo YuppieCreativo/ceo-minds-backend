@@ -6,13 +6,13 @@ const own_email = config.own_email as string;
 const google_sheet_url = config.google_sheet_url;
 
 class EmailController {
-  async sendEmail({ email }: { email: string }) {
-    const { error } = await resend.emails.send({
-      to: [own_email, "info@ceominds.net"],
-      from: "info@ceominds.net",
-      cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
-      subject: "A new person has been added to the CEOminds' database. ",
-      html: `
+    async sendEmail({ email }: { email: string }) {
+        const { error } = await resend.emails.send({
+            to: [own_email, "info@ceominds.net"],
+            from: "info@ceominds.net",
+            cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
+            subject: "A new person has been added to the CEOminds' database. ",
+            html: `
         <!DOCTYPE html>
         <html>
             <head>
@@ -208,17 +208,17 @@ class EmailController {
             </body>
         </html>
         `,
-    });
+        });
 
-    return { error };
-  }
+        return { error };
+    }
 
-  async sendPricing({ email }: { email: string }) {
-    const { error } = await resend.emails.send({
-      to: [email],
-      from: "info@ceominds.net",
-      subject: "Hola CEO Minder",
-      html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    async sendPricing({ email }: { email: string }) {
+        const { error } = await resend.emails.send({
+            to: [email],
+            from: "info@ceominds.net",
+            subject: "Hola CEO Minder",
+            html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html dir="ltr" lang="en">
   <head>
     <link
@@ -347,18 +347,18 @@ class EmailController {
   </body>
 </html>
 `,
-    });
+        });
 
-    return { error };
-  }
+        return { error };
+    }
 
-  async sendAttendance({ userEmail }: { userEmail: string }) {
-    const { error } = await resend.emails.send({
-      to: [own_email, "info@ceominds.net", userEmail],
-      from: "info@ceominds.net",
-      cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
-      subject: "Attendance",
-      html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    async sendAttendance({ userEmail }: { userEmail: string }) {
+        const { error } = await resend.emails.send({
+            to: [own_email, "info@ceominds.net", userEmail],
+            from: "info@ceominds.net",
+            cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
+            subject: "Attendance",
+            html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html dir="ltr" lang="en">
   <head>
     <link
@@ -393,10 +393,59 @@ class EmailController {
   </body>
 </html>
 `,
-    });
+        });
 
-    return { error };
-  }
+        return { error };
+    }
+
+    async sendAttendanceEmailCarolinaMontes({
+        userEmail,
+    }: {
+        userEmail: string;
+    }) {
+        const { error } = await resend.emails.send({
+            to: [own_email, "info@ceominds.net", userEmail],
+            from: "info@ceominds.net",
+            cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
+            subject: "Confirmación exitosa - Apreciamos tu confirmación",
+            html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html dir="ltr" lang="en">
+  <head>
+    <link
+      rel="preload"
+      as="image"
+      href="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/carolina+montes.png" />
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <meta name="x-apple-disable-message-reformatting" />
+    <!--$-->
+  </head>
+  <body style="padding-top:2.5rem;padding-bottom:2.5rem">
+    <table
+      align="center"
+      width="100%"
+      border="0"
+      cellpadding="0"
+      cellspacing="0"
+      role="presentation"
+      style="max-width:37.5em">
+      <tbody>
+        <tr style="width:100%">
+          <td>
+            <img
+              alt="CEOMinds Attendance"
+              src="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/carolina+montes.png"
+              style="border-radius:0.5rem;object-position:center;max-width:95%;max-height:95%;margin-left:auto;margin-right:auto;display:block;outline:none;border:none;text-decoration:none" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!--/$-->
+  </body>
+</html>
+`,
+        });
+        return { error };
+    }
 }
 
 export default new EmailController();
