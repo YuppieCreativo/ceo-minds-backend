@@ -8,7 +8,7 @@ const google_sheet_url = config.google_sheet_url;
 class EmailController {
     async sendEmail({ email }: { email: string }) {
         const { error } = await resend.emails.send({
-            to: [own_email, "info@ceominds.net"],
+            to: [own_email],
             from: "info@ceominds.net",
             cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
             subject: "A new person has been added to the CEOminds' database. ",
@@ -354,7 +354,7 @@ class EmailController {
 
     async sendAttendance({ userEmail }: { userEmail: string }) {
         const { error } = await resend.emails.send({
-            to: [own_email, "info@ceominds.net", userEmail],
+            to: [own_email, userEmail],
             from: "info@ceominds.net",
             cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
             subject: "Attendance",
@@ -404,7 +404,7 @@ class EmailController {
         userEmail: string;
     }) {
         const { error } = await resend.emails.send({
-            to: [own_email, "info@ceominds.net", userEmail],
+            to: [own_email, userEmail],
             from: "CEO Minds <info@ceominds.net>",
             cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
             subject: "Asistencia confirmada - “Carolina Montes” 24 de mayo",
