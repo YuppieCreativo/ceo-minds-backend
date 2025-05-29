@@ -232,7 +232,7 @@ class EmailController {
     <link
       rel="preload"
       as="image"
-      href="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/Group+1171275903.png" />
+      href="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/pricingGroup.png" />
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
     <meta name="x-apple-disable-message-reformatting" />
     <!--$-->
@@ -283,7 +283,7 @@ class EmailController {
               cellpadding="0"
               cellspacing="0"
               role="presentation"
-              style='background-color:rgb(255,255,255);border-top-left-radius:1.5rem;border-top-right-radius:1.5rem;margin-top:auto;margin-bottom:auto;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";max-width:525px;color:rgb(0,0,0)'>
+              style='background-color:rgb(255,255,255);border-top-left-radius:1.5rem;border-top-right-radius:1.5rem;margin-top:auto;margin-bottom:auto;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";max-width:600px;color:rgb(0,0,0)'>
               <tbody>
                 <tr>
                   <td>
@@ -294,11 +294,11 @@ class EmailController {
                     <hr
                       style="max-width:50%;margin-left:auto;margin-right:auto;height:0.6px;background-color:rgb(0,0,0);width:100%;border:none;border-top:1px solid #eaeaea" />
                     <p
-                      style="text-align:center;margin-left:auto;margin-right:auto;font-size:16px;line-height:24px;margin:16px 0">
+                      style="text-align:center;padding-left:1rem;padding-right:1rem;font-size:16px;line-height:24px;margin:16px 0">
                       ¡Gracias por asegurar tu membresía con nosotros! Para
-                      agilizar la <br />validación de tu pago, puedes reportarlo
-                      directamente enviando tus <br />
-                      datos en este mismo correo:
+                      agilizar la validación de tu pago, puedes reportarlo
+                      directamente enviando tus datos<br />
+                      en este mismo correo:
                     </p>
                     <ul
                       class="space-y-2"
@@ -312,10 +312,8 @@ class EmailController {
                     </ul>
                     <p
                       style="text-align:center;margin-left:auto;margin-right:auto;font-size:16px;line-height:24px;margin:16px 0">
-                      Si tienes dudas o necesitas ayuda, haznos saber. Estamos
-                      para<!-- -->
-                      <br />
-                      apoyarte.
+                      Si tienes dudas o necesitas ayuda, haznos saber.<!-- -->
+                      <br />Estamos para apoyarte.
                     </p>
                     <div
                       style="border-width:2px;border-color:rgb(0,0,0);border-radius:9999px">
@@ -325,16 +323,16 @@ class EmailController {
                           >¡Esperamos verte pronto!</b
                         >
                         <br />
-                        <!-- -->Equipo de CEO Minds.
+                        Equipo de CEO Minds.
                       </p>
                     </div>
                     <hr
                       style="max-width:50%;margin-left:auto;margin-right:auto;height:0.6px;background-color:rgb(0,0,0);width:100%;border:none;border-top:1px solid #eaeaea" />
                     <img
-                      height="465"
-                      src="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/Group+1171275903.png"
-                      style="margin-left:3rem;margin-bottom:0.75rem;margin-top:2rem;display:block;outline:none;border:none;text-decoration:none"
-                      width="525" />
+                      height="380"
+                      src="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/pricingGroup.png"
+                      style="margin-left:auto;margin-right:auto;margin-bottom:1.25rem;margin-top:1.5rem;display:block;outline:none;border:none;text-decoration:none"
+                      width="420" />
                   </td>
                 </tr>
               </tbody>
