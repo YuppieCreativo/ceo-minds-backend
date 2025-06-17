@@ -6,13 +6,13 @@ const own_email = config.own_email as string;
 const google_sheet_url = config.google_sheet_url;
 
 class EmailController {
-    async sendEmail({ email }: { email: string }) {
-        const { error } = await resend.emails.send({
-            to: [own_email],
-            from: "info@ceominds.net",
-            cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
-            subject: "A new person has been added to the CEOminds' database. ",
-            html: `
+  async sendEmail({ email }: { email: string }) {
+    const { error } = await resend.emails.send({
+      to: [own_email],
+      from: "info@ceominds.net",
+      cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
+      subject: "A new person has been added to the CEOminds' database. ",
+      html: `
         <!DOCTYPE html>
         <html>
             <head>
@@ -208,17 +208,17 @@ class EmailController {
             </body>
         </html>
         `,
-        });
+    });
 
-        return { error };
-    }
+    return { error };
+  }
 
-    async sendPricing({ email }: { email: string }) {
-        const { error } = await resend.emails.send({
-            to: [email],
-            from: "info@ceominds.net",
-            subject: "Hola CEO Minder",
-            html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  async sendPricing({ email }: { email: string }) {
+    const { error } = await resend.emails.send({
+      to: [email],
+      from: "info@ceominds.net",
+      subject: "Hola CEO Minder",
+      html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html dir="ltr" lang="en">
   <head>
     <link
@@ -345,18 +345,18 @@ class EmailController {
   </body>
 </html>
 `,
-        });
+    });
 
-        return { error };
-    }
+    return { error };
+  }
 
-    async sendAttendance({ userEmail }: { userEmail: string }) {
-        const { error } = await resend.emails.send({
-            to: [own_email, userEmail],
-            from: "info@ceominds.net",
-            cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
-            subject: "Attendance",
-            html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  async sendAttendance({ userEmail }: { userEmail: string }) {
+    const { error } = await resend.emails.send({
+      to: [own_email, userEmail],
+      from: "info@ceominds.net",
+      cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
+      subject: "Attendance",
+      html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html dir="ltr" lang="en">
   <head>
     <link
@@ -391,22 +391,22 @@ class EmailController {
   </body>
 </html>
 `,
-        });
+    });
 
-        return { error };
-    }
+    return { error };
+  }
 
-    async sendAttendanceEmailCarolinaMontes({
-        userEmail,
-    }: {
-        userEmail: string;
-    }) {
-        const { error } = await resend.emails.send({
-            to: [own_email, userEmail],
-            from: "CEO Minds <info@ceominds.net>",
-            cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
-            subject: "Asistencia confirmada - “Carolina Montes” 24 de mayo",
-            html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  async sendAttendanceEmailCarolinaMontes({
+    userEmail,
+  }: {
+    userEmail: string;
+  }) {
+    const { error } = await resend.emails.send({
+      to: [own_email, userEmail],
+      from: "CEO Minds <info@ceominds.net>",
+      cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
+      subject: "Asistencia confirmada - “Carolina Montes” 24 de mayo",
+      html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html dir="ltr" lang="en">
   <head>
     <link
@@ -441,9 +441,25 @@ class EmailController {
   </body>
 </html>
 `,
-        });
-        return { error };
-    }
+    });
+    return { error };
+  }
+
+  async sendAttendanceEmailJoseRamonFermin({
+    userEmail,
+  }: {
+    userEmail: string;
+  }) {
+    const { error } = await resend.emails.send({
+      to: [own_email, userEmail],
+      from: "CEO Minds <info@ceominds.net>",
+      cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
+      subject: "Asistencia confirmada - “Jose Ramón Fermín” 21 de Junio",
+      html: ``,
+    });
+    return { error };
+  }
+
 }
 
 export default new EmailController();
