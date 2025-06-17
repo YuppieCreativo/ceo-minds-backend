@@ -289,7 +289,7 @@ class UserController {
             await userInSheet.save();
 
             const { error } =
-                await EmailController.sendAttendanceEmailCarolinaMontes({
+                await EmailController.sendAttendanceEmailJoseRamonFermin({
                     userEmail: user.email.toLowerCase(),
                 });
 
