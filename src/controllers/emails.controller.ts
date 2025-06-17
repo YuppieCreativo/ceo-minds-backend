@@ -455,7 +455,41 @@ class EmailController {
       from: "CEO Minds <info@ceominds.net>",
       cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
       subject: "Asistencia confirmada - “Jose Ramón Fermín” 21 de Junio",
-      html: ``,
+      html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html dir="ltr" lang="en">
+  <head>
+    <link
+      rel="preload"
+      as="image"
+      href="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/JoseRamonFerminEmail.png" />
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <meta name="x-apple-disable-message-reformatting" />
+    <!--$-->
+  </head>
+  <body style="padding-top:2.5rem;padding-bottom:2.5rem">
+    <table
+      align="center"
+      width="100%"
+      border="0"
+      cellpadding="0"
+      cellspacing="0"
+      role="presentation"
+      style="max-width:37.5em">
+      <tbody>
+        <tr style="width:100%">
+          <td>
+            <img
+              alt="CEOMinds Attendance"
+              src="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/JoseRamonFerminEmail.png"
+              style="border-radius:0.5rem;object-position:center;max-width:95%;max-height:95%;margin-left:auto;margin-right:auto;display:block;outline:none;border:none;text-decoration:none" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!--/$-->
+  </body>
+</html>
+`,
     });
     return { error };
   }
