@@ -574,8 +574,7 @@ class EmailController {
                 from: "CEO Minds <info@ceominds.net>",
                 to: [own_email, ...emails],
                 cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
-                subject:
-                    "Estas invitado! Micro-habitos: el camino hacia el alto rendimiento",
+                subject: "Link de zoom: Micro-Hábitos con Carlos Egaña",
                 html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                         <html dir="ltr" lang="es">
                           <head>
