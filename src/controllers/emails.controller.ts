@@ -4,6 +4,14 @@ import { config } from "../config";
 const resend = new Resend(config.resend_api);
 const own_email = config.own_email as string;
 const google_sheet_url = config.google_sheet_url;
+import { JWT } from "google-auth-library";
+const { GoogleSpreadsheet } = require("google-spreadsheet");
+
+const serviceAccountAuth = new JWT({
+    email: config.client_email,
+    key: config.private_key,
+    scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+});
 
 class EmailController {
     async sendEmail({ email }: { email: string }) {
@@ -541,6 +549,238 @@ class EmailController {
 `,
         });
         return { error };
+    }
+
+    async CarlosManuelEmail() {
+        try {
+            const doc = new GoogleSpreadsheet(
+                config.SHEET_ID,
+                serviceAccountAuth
+            );
+
+            await doc.loadInfo();
+
+            const sheet = doc.sheetsByIndex.pop();
+
+            const rows = await sheet.getRows();
+
+            const emails: string[] = rows
+                .map((row: any) => {
+                    return row.get("Correo");
+                })
+                .filter((email: string) => email);
+
+            const { error } = await resend.emails.send({
+                from: "CEO Minds <info@ceominds.net>",
+                to: [own_email, ...emails],
+                cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
+                subject:
+                    "Estas invitado! Micro-habitos: el camino hacia el alto rendimiento",
+                html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+                        <html dir="ltr" lang="es">
+                          <head>
+                            <link
+                              rel="preload"
+                              as="image"
+                              href="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/Capa+1.png" />
+                            <link
+                              rel="preload"
+                              as="image"
+                              href="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/Link.png" />
+                            <link
+                              rel="preload"
+                              as="image"
+                              href="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/zoomIcon.png" />
+                            <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+                            <meta name="x-apple-disable-message-reformatting" />
+                            <!--$-->
+                            <style>
+                              @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+                              @import url('https://fonts.cdnfonts.com/css/giliran');
+                              @import url('https://fonts.cdnfonts.com/css/poppins');
+                            </style>
+                          </head>
+                          <body
+                            style="background-color:rgb(243,244,246);font-family:Josefin Sans, sans-serif;color:rgb(255,255,255);margin:0;padding:0">
+                            <table
+                              align="center"
+                              width="100%"
+                              border="0"
+                              cellpadding="0"
+                              cellspacing="0"
+                              role="presentation"
+                              style="margin-left:auto;margin-right:auto;width:390px;max-width:100%;margin-top:2.5rem;margin-bottom:2.5rem;box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), 0 10px 15px -3px rgb(0,0,0,0.1), 0 4px 6px -4px rgb(0,0,0,0.1);border-radius:0.5rem;padding-top:1.5rem;padding-bottom:1.5rem;overflow:hidden;text-align:center;background-image:url(https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/historia+Carlos+Manuel+Enga%C3%B1a+3.png);background-size:cover;background-repeat:no-repeat;background-position:center">
+                              <tbody>
+                                <tr style="width:100%">
+                                  <td>
+                                    <table
+                                      align="center"
+                                      width="100%"
+                                      border="0"
+                                      cellpadding="0"
+                                      cellspacing="0"
+                                      role="presentation"
+                                      style="width:100%;text-align:center;padding-top:32px;padding-bottom:100px;min-height:500px">
+                                      <tbody>
+                                        <tr>
+                                          <td>
+                                            <img
+                                              src="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/Capa+1.png"
+                                              style="max-width:120px;margin-bottom:2rem;margin-left:auto;margin-right:auto;display:block;outline:none;border:none;text-decoration:none"
+                                              width="105" />
+                                            <p
+                                              style="font-size:1.5rem;line-height:1.2;color:rgb(255,255,255);text-align:center;text-transform:uppercase;margin:0px;padding:0px;margin-bottom:32px">
+                                              <span style="font-weight:300">MICRO-HÁBITOS:</span>
+                                              <br /><span
+                                                style="text-align:center;font-weight:800;padding-left:0.5rem;padding-right:0.5rem"
+                                                >EL CAMINO HACIA EL ALTO RENDIMIENTO</span
+                                              >
+                                            </p>
+                                            <p
+                                              style="font-size:1.875rem;line-height:2.25rem;margin-bottom:2.5rem;font-weight:300;text-transform:capitalize;margin:16px 0">
+                                              carlos manuel egaña
+                                            </p>
+                                            <table
+                                              align="center"
+                                              width="100%"
+                                              border="0"
+                                              cellpadding="0"
+                                              cellspacing="0"
+                                              role="presentation"
+                                              style="width:100%;margin-top:5rem;margin-bottom:5rem;padding-left:0.75rem;padding-right:0.75rem">
+                                              <tbody>
+                                                <tr>
+                                                  <td>
+                                                    <table
+                                                      align="center"
+                                                      width="100%"
+                                                      border="0"
+                                                      cellpadding="0"
+                                                      cellspacing="0"
+                                                      role="presentation"
+                                                      style="margin-left:auto;margin-right:auto">
+                                                      <tbody style="width:100%">
+                                                        <tr style="width:100%">
+                                                          <td
+                                                            data-id="__react-email-column"
+                                                            style="width:33.333333%;text-align:start;padding-left:0.75rem;color:rgb(255,255,255)">
+                                                            <p
+                                                              style="font-size:1.5rem;line-height:2rem;font-weight:700;text-transform:uppercase;margin:0px;padding:0px">
+                                                              FECHA
+                                                            </p>
+                                                            <p
+                                                              style="font-size:1.5rem;line-height:2rem;letter-spacing:0.05em;font-weight:200;font-family:Giliran;margin:0px;padding:0px;margin-top:-7px">
+                                                              02.08
+                                                            </p>
+                                                          </td>
+                                                          <td
+                                                            data-id="__react-email-column"
+                                                            style="width:33.333333%"></td>
+                                                          <td
+                                                            data-id="__react-email-column"
+                                                            style="width:33.333333%;text-align:start;padding-left:2rem;color:rgb(255,255,255)">
+                                                            <p
+                                                              style="font-size:1.5rem;line-height:2rem;font-weight:700;text-transform:uppercase;margin:0px;padding:0px">
+                                                              HORA
+                                                            </p>
+                                                            <p
+                                                              style="letter-spacing:0.05em;font-size:1.5rem;line-height:2rem;font-weight:200;margin:0px;padding:0px;font-family:Giliran;margin-top:-7px">
+                                                              10:00<span
+                                                                style="font-size:0.875rem;line-height:1.25rem;font-weight:400;letter-spacing:0em;vertical-align:text-bottom"
+                                                                >am</span
+                                                              >
+                                                            </p>
+                                                          </td>
+                                                        </tr>
+                                                      </tbody>
+                                                    </table>
+                                                  </td>
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                    <table
+                                      align="center"
+                                      width="100%"
+                                      border="0"
+                                      cellpadding="0"
+                                      cellspacing="0"
+                                      role="presentation"
+                                      style="width:100%;padding-top:0.5rem;padding-bottom:0.5rem">
+                                      <tbody>
+                                        <tr>
+                                          <td>
+                                            <table
+                                              align="center"
+                                              width="100%"
+                                              border="0"
+                                              cellpadding="0"
+                                              cellspacing="0"
+                                              role="presentation">
+                                              <tbody style="width:100%">
+                                                <tr style="width:100%">
+                                                  <a
+                                                    href="https://us05web.zoom.us/j/83485652986?pwd=lKqSHk9FPilvOSYCnooVu5Ph58Q7WA.1"
+                                                    style="background-color:rgb(64,108,255);font-weight:600;padding-top:0.5rem;padding-bottom:0.5rem;padding-left:1rem;padding-right:1rem;border-radius:0.5rem;text-align:center;font-size:1rem;line-height:1.5rem;color:rgb(255,255,255);text-decoration-line:none;font-family:Poppins;text-decoration:none;display:inline-block;max-width:100%;mso-padding-alt:0px;padding:8px 16px 8px 16px"
+                                                    target="_blank"
+                                                    ><span
+                                                      ><!--[if mso]><i style="mso-font-width:400%;mso-text-raise:12" hidden>&#8202;&#8202;</i><![endif]--></span
+                                                    ><span
+                                                      style="max-width:100%;display:inline-block;line-height:120%;mso-padding-alt:0px;mso-text-raise:6px"
+                                                      ><span
+                                                        style="line-height:1;display:inline-block;vertical-align:middle"
+                                                        >Conéctate Aquí</span
+                                                      ><img
+                                                        alt="Link Icon"
+                                                        height="18"
+                                                        src="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/Link.png"
+                                                        style="display:inline-block;margin-left:0.5rem;vertical-align:middle;outline:none;border:none;text-decoration:none"
+                                                        width="18" /></span
+                                                    ><span
+                                                      ><!--[if mso]><i style="mso-font-width:400%" hidden>&#8202;&#8202;&#8203;</i><![endif]--></span
+                                                    ></a
+                                                  >
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                            <table
+                                              align="center"
+                                              width="100%"
+                                              border="0"
+                                              cellpadding="0"
+                                              cellspacing="0"
+                                              role="presentation">
+                                              <tbody style="width:100%">
+                                                <tr style="width:100%">
+                                                  <img
+                                                    alt="Zoom Icon"
+                                                    src="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/zoomIcon.png"
+                                                    style="display:inline-block;margin-top:0.5rem;margin-left:auto;margin-right:auto;outline:none;border:none;text-decoration:none"
+                                                    width="78" />
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <!--/$-->
+                          </body>
+                        </html>
+                `,
+            });
+
+            if (error) throw new Error(`${error}`);
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 

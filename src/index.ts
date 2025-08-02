@@ -7,17 +7,18 @@ import { connectDB } from "./db";
 import { config } from "./config";
 import routes from "./routes/index";
 import cron from "node-cron";
+import emailsController from "./controllers/emails.controller";
 
 connectDB();
 
 const app: Application = express();
 
 app.use(
-  cors({
-    credentials: true,
-    methods: ["GET", "POST", "PUT"],
-    optionsSuccessStatus: 200,
-  })
+    cors({
+        credentials: true,
+        methods: ["GET", "POST", "PUT"],
+        optionsSuccessStatus: 200,
+    })
 );
 
 app.use(compression());
@@ -27,11 +28,19 @@ app.use(bodyParser.json());
 app.use("/", routes);
 
 app.listen(config.PORT, () => {
-  console.log(`server running on http://localhost:${config.PORT}`);
+    console.log(`server running on http://localhost:${config.PORT}`);
 });
 
 cron.schedule("*/13 * * * *", async () => {
-  console.log("running a task every 13 minute");
+    console.log("running a task every 13 minute");
 
-  await fetch(`${config.BACKEND_URL ?? ""}/api/user`);
+    await fetch(`${config.BACKEND_URL ?? ""}/api/user`);
+});
+
+cron.schedule("0 9 2 8 *", async () => {
+    try {
+        await emailsController.CarlosManuelEmail();
+    } catch (error) {
+        console.log(error);
+    }
 });
