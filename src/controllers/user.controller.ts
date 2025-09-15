@@ -288,10 +288,9 @@ class UserController {
 
             await userInSheet.save();
 
-            const { error } =
-                await EmailController.sendAttendanceEmailIsaacFernandez({
-                    userEmail: user.email.toLowerCase(),
-                });
+            const { error } = await EmailController.CaylinMilianiEmail({
+                userEmail: user.email.toLowerCase(),
+            });
 
             if (error) {
                 console.log("Error to send email after create user", error);
