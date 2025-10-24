@@ -878,7 +878,7 @@ class EmailController {
       to: [own_email, userEmail],
       from: "CEO Minds <info@ceominds.net>",
       cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
-      subject: "Asistencia confirmada - “Caylin Miliani” 20 de Septiembre",
+      subject: "Asistencia confirmada - “Andreina Barrera” 01 de Noviembre",
       html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
             <html dir="ltr" lang="en">
               <head>
