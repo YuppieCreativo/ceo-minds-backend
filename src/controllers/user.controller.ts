@@ -7,334 +7,318 @@ import { config } from "../config";
 import EmailController from "./emails.controller";
 
 const serviceAccountAuth = new JWT({
-    email: config.client_email,
-    key: config.private_key,
-    scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+  email: config.client_email,
+  key: config.private_key,
+  scopes: ["https://www.googleapis.com/auth/spreadsheets"],
 });
 
 class UserController {
-    async getUserList(_req: Request, res: Response) {
-        const users = await UserModel.find({});
+  async getUserList(_req: Request, res: Response) {
+    const users = await UserModel.find({});
 
-        if (!users || users.length === 0)
-            return res.status(404).json({ error: "No users found" });
+    if (!users || users.length === 0)
+      return res.status(404).json({ error: "No users found" });
 
-        return res.status(200).json(users);
+    return res.status(200).json(users);
+  }
+
+  async getUser(req: Request, res: Response) {
+    const userId = req.params.id;
+
+    try {
+      const user = await UserModel.findById(userId);
+
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+
+      return res.status(200).json(user);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Internal Server Error" });
     }
+  }
 
-    async getUser(req: Request, res: Response) {
-        const userId = req.params.id;
+  async create(req: Request, res: Response) {
+    try {
+      const {
+        fullName,
+        comments,
+        role,
+        email,
+        phone,
+        socialMedia,
+        paymentMethod,
+        servicePack,
+      }: UserDTO = req.body;
 
-        try {
-            const user = await UserModel.findById(userId);
+      const existUser = await this.get(email);
 
-            if (!user) {
-                return res.status(404).json({ error: "User not found" });
-            }
+      if (existUser) {
+        if (
+          (paymentMethod || servicePack) &&
+          !existUser.paymentMethod &&
+          !existUser.servicePack
+        ) {
+          const userUpdated = await this.update(existUser._id.toString(), {
+            paymentMethod,
+            servicePack,
+          });
 
-            return res.status(200).json(user);
-        } catch (error) {
-            console.error(error);
-            return res.status(500).json({ error: "Internal Server Error" });
+          const doc = new GoogleSpreadsheet(
+            config.SHEET_ID,
+            serviceAccountAuth,
+          );
+
+          await doc.loadInfo();
+
+          const sheet = doc.sheetsByIndex[0];
+
+          const rows = await sheet.getRows();
+
+          const updatedRow = rows.find(
+            (row: any) => row.get("Email") === email,
+          );
+
+          await updatedRow.assign({
+            "Metodo de Pago": paymentMethod,
+            Servicio: servicePack,
+          });
+
+          await updatedRow.save();
+
+          const { error } = await EmailController.sendPricing({
+            email,
+          });
+
+          if (error) {
+            return res.status(500).json({ error });
+          }
+
+          return res.status(200).json(userUpdated);
+        } else if (
+          (!paymentMethod && !servicePack) ||
+          (paymentMethod &&
+            servicePack &&
+            existUser.paymentMethod &&
+            existUser.servicePack)
+        ) {
+          return res.status(409).json(existUser);
         }
-    }
+      }
 
-    async create(req: Request, res: Response) {
-        try {
-            const {
-                fullName,
-                comments,
-                role,
-                email,
-                phone,
-                socialMedia,
-                paymentMethod,
-                servicePack,
-            }: UserDTO = req.body;
+      const userSaved = await this.createUser(req.body);
 
-            const existUser = await this.get(email);
+      if (!userSaved) {
+        return res.status(500).json({ error: "Internal Server Error" });
+      }
 
-            if (existUser) {
-                if (
-                    (paymentMethod || servicePack) &&
-                    !existUser.paymentMethod &&
-                    !existUser.servicePack
-                ) {
-                    const userUpdated = await this.update(
-                        existUser._id.toString(),
-                        {
-                            paymentMethod,
-                            servicePack,
-                        }
-                    );
+      const doc = new GoogleSpreadsheet(config.SHEET_ID, serviceAccountAuth);
 
-                    const doc = new GoogleSpreadsheet(
-                        config.SHEET_ID,
-                        serviceAccountAuth
-                    );
+      await doc.loadInfo();
 
-                    await doc.loadInfo();
+      const sheet = doc.sheetsByIndex.find(
+        (sheet: { title: string }) => sheet.title.toLowerCase() === "users",
+      );
 
-                    const sheet = doc.sheetsByIndex[0];
+      await sheet.addRow({
+        Nombre: fullName,
+        Email: email,
+        "Phone Number": phone,
+        Cargo: role,
+        "Redes Sociales": socialMedia,
+        Comentarios: comments,
+        "Metodo de Pago": paymentMethod,
+        Servicio: servicePack,
+        "Created At": new Date(`${userSaved.createdAt}`).toUTCString(),
+      });
 
-                    const rows = await sheet.getRows();
+      const { error: subscriptionEmailError } = await EmailController.sendEmail(
+        { email },
+      );
 
-                    const updatedRow = rows.find(
-                        (row: any) => row.get("Email") === email
-                    );
+      const { error: pricingEmailError } = await EmailController.sendPricing({
+        email,
+      });
 
-                    await updatedRow.assign({
-                        "Metodo de Pago": paymentMethod,
-                        Servicio: servicePack,
-                    });
+      if (pricingEmailError) {
+        return res.status(500).json({ pricingEmailError });
+      }
 
-                    await updatedRow.save();
-
-                    const { error } = await EmailController.sendPricing({
-                        email,
-                    });
-
-                    if (error) {
-                        return res.status(500).json({ error });
-                    }
-
-                    return res.status(200).json(userUpdated);
-                } else if (
-                    (!paymentMethod && !servicePack) ||
-                    (paymentMethod &&
-                        servicePack &&
-                        existUser.paymentMethod &&
-                        existUser.servicePack)
-                ) {
-                    return res.status(409).json(existUser);
-                }
-            }
-
-            const userSaved = await this.createUser(req.body);
-
-            if (!userSaved) {
-                return res.status(500).json({ error: "Internal Server Error" });
-            }
-
-            const doc = new GoogleSpreadsheet(
-                config.SHEET_ID,
-                serviceAccountAuth
-            );
-
-            await doc.loadInfo();
-
-            const sheet = doc.sheetsByIndex.find(
-                (sheet: { title: string }) =>
-                    sheet.title.toLowerCase() === "users"
-            );
-
-            await sheet.addRow({
-                Nombre: fullName,
-                Email: email,
-                "Phone Number": phone,
-                Cargo: role,
-                "Redes Sociales": socialMedia,
-                Comentarios: comments,
-                "Metodo de Pago": paymentMethod,
-                Servicio: servicePack,
-                "Created At": new Date(`${userSaved.createdAt}`).toUTCString(),
-            });
-
-            const { error: subscriptionEmailError } =
-                await EmailController.sendEmail({ email });
-
-            const { error: pricingEmailError } =
-                await EmailController.sendPricing({ email });
-
-            if (pricingEmailError) {
-                return res.status(500).json({ pricingEmailError });
-            }
-
-            if (subscriptionEmailError) {
-                console.log(
-                    "Error to send email after create user",
-                    subscriptionEmailError
-                );
-            }
-
-            return res.status(201).json(userSaved);
-        } catch (error) {
-            console.log(error);
-            return res.status(500).json({ error: "Internal Server Error" });
-        }
-    }
-
-    private async get(email: string): Promise<User | null> {
-        return await UserModel.findOne({ email });
-    }
-
-    private async update(
-        _id: string,
-        fields: Partial<Omit<User, "_id">>
-    ): Promise<User | null> {
-        return await UserModel.findByIdAndUpdate(
-            {
-                _id,
-            },
-            {
-                $set: fields,
-            },
-            {
-                new: true,
-            }
+      if (subscriptionEmailError) {
+        console.log(
+          "Error to send email after create user",
+          subscriptionEmailError,
         );
+      }
+
+      return res.status(201).json(userSaved);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+  }
+
+  private async get(email: string): Promise<User | null> {
+    return await UserModel.findOne({ email });
+  }
+
+  private async update(
+    _id: string,
+    fields: Partial<Omit<User, "_id">>,
+  ): Promise<User | null> {
+    return await UserModel.findByIdAndUpdate(
+      {
+        _id,
+      },
+      {
+        $set: fields,
+      },
+      {
+        new: true,
+      },
+    );
+  }
+
+  private async createUser(
+    user: Partial<Omit<User, "_id">>,
+  ): Promise<User | null> {
+    const newUser = new UserModel(user);
+
+    return await newUser.save();
+  }
+
+  async sinchronize(_req: Request, res: Response) {
+    const doc = new GoogleSpreadsheet(config.SHEET_ID, serviceAccountAuth);
+
+    await doc.loadInfo();
+
+    const sheet = doc.sheetsByIndex[0];
+
+    const rows = await sheet.getRows();
+
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    const usersInSheet = rows.map((row: any) => {
+      return {
+        fullName: row.get("Nombre"),
+        email: row.get("Email"),
+        phone: row.get("Phone Number"),
+        role: row.get("Cargo"),
+        socialMedia: row.get("Redes Sociales"),
+        comments: row.get("Comentarios"),
+        paymentMethod: row.get("Metodo de Pago"),
+        servicePack: row.get("Servicio"),
+      };
+    });
+
+    const users = await UserModel.find({});
+
+    const usersFiltered = users.filter(
+      (user) =>
+        !usersInSheet.some(
+          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+          (userInSheet: any) => userInSheet.email === user.email,
+        ),
+    );
+
+    if (usersFiltered.length === 0) {
+      return res
+        .status(200)
+        .json({ message: "CEOMinds leads form is up to date" });
     }
 
-    private async createUser(
-        user: Partial<Omit<User, "_id">>
-    ): Promise<User | null> {
-        const newUser = new UserModel(user);
-
-        return await newUser.save();
+    for await (const user of usersFiltered) {
+      await sheet.addRow({
+        Nombre: user.fullName,
+        Email: user.email,
+        "Phone Number": user.phone,
+        Cargo: user.role,
+        "Redes Sociales": user.socialMedia,
+        Comentarios: user.comments,
+        "Metodo de Pago": user.paymentMethod,
+        Servicio: user.servicePack,
+        "Created At": new Date(`${user.createdAt}`).toUTCString(),
+      });
     }
 
-    async sinchronize(_req: Request, res: Response) {
-        const doc = new GoogleSpreadsheet(config.SHEET_ID, serviceAccountAuth);
+    return res
+      .status(200)
+      .json({ message: `${usersFiltered.length} new Leads added` });
+  }
 
-        await doc.loadInfo();
+  async attendance(req: Request, res: Response) {
+    const user: Pick<User, "email" | "fullName"> = req.body;
 
-        const sheet = doc.sheetsByIndex[0];
+    try {
+      const doc = new GoogleSpreadsheet(config.SHEET_ID, serviceAccountAuth);
 
-        const rows = await sheet.getRows();
+      await doc.loadInfo();
 
-        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-        const usersInSheet = rows.map((row: any) => {
-            return {
-                fullName: row.get("Nombre"),
-                email: row.get("Email"),
-                phone: row.get("Phone Number"),
-                role: row.get("Cargo"),
-                socialMedia: row.get("Redes Sociales"),
-                comments: row.get("Comentarios"),
-                paymentMethod: row.get("Metodo de Pago"),
-                servicePack: row.get("Servicio"),
-            };
-        });
+      const sheet = doc.sheetsByIndex.pop();
 
-        const users = await UserModel.find({});
+      const rows = await sheet.getRows();
 
-        const usersFiltered = users.filter(
-            (user) =>
-                !usersInSheet.some(
-                    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-                    (userInSheet: any) => userInSheet.email === user.email
-                )
-        );
+      const userInSheet = rows.find(
+        (row: any) =>
+          row.get("Correo").trim().toLowerCase() ===
+          user.email.trim().toLowerCase(),
+      );
 
-        if (usersFiltered.length === 0) {
-            return res
-                .status(200)
-                .json({ message: "CEOMinds leads form is up to date" });
-        }
+      if (!userInSheet) {
+        return res.status(404).json({ error: "User not found" });
+      }
 
-        for await (const user of usersFiltered) {
-            await sheet.addRow({
-                Nombre: user.fullName,
-                Email: user.email,
-                "Phone Number": user.phone,
-                Cargo: user.role,
-                "Redes Sociales": user.socialMedia,
-                Comentarios: user.comments,
-                "Metodo de Pago": user.paymentMethod,
-                Servicio: user.servicePack,
-                "Created At": new Date(`${user.createdAt}`).toUTCString(),
-            });
-        }
+      const currentAttendance = userInSheet.get("Asistencia");
 
-        return res
-            .status(200)
-            .json({ message: `${usersFiltered.length} new Leads added` });
+      if (currentAttendance === "Confirmado") {
+        return res.status(400).json({ error: "User already confirmed" });
+      }
+
+      userInSheet.set("Asistencia", "Confirmado");
+
+      await userInSheet.save();
+
+      const { error } = await EmailController.AndreinaBarrera({
+        userEmail: user.email.toLowerCase(),
+      });
+
+      if (error) {
+        console.log("Error to send email after create user", error);
+      }
+
+      return res.status(200).json({ message: "Attendance confirmed" });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ error: "Internal Server Error" });
     }
+  }
 
-    async attendance(req: Request, res: Response) {
-        const user: Pick<User, "email" | "fullName"> = req.body;
+  async getLastAttendanceList(_req: Request, res: Response) {
+    try {
+      const doc = new GoogleSpreadsheet(config.SHEET_ID, serviceAccountAuth);
+      await doc.loadInfo();
 
-        try {
-            const doc = new GoogleSpreadsheet(
-                config.SHEET_ID,
-                serviceAccountAuth
-            );
+      const sheet = doc.sheetsByIndex.pop();
 
-            await doc.loadInfo();
+      const rows = await sheet.getRows();
 
-            const sheet = doc.sheetsByIndex.pop();
+      const users = rows.map((row: any) => {
+        return {
+          fullName: row.get("Nombre y Apellido")?.toLowerCase()?.trim(),
+          email: row.get("Correo")?.toLowerCase()?.trim(),
+        };
+      });
 
-            const rows = await sheet.getRows();
+      if (!users || users.length === 0) {
+        return res.status(404).json({ error: "Users not found" });
+      }
 
-            const userInSheet = rows.find(
-                (row: any) =>
-                    row.get("Correo").trim().toLowerCase() ===
-                    user.email.trim().toLowerCase()
-            );
-
-            if (!userInSheet) {
-                return res.status(404).json({ error: "User not found" });
-            }
-
-            const currentAttendance = userInSheet.get("Asistencia");
-
-            if (currentAttendance === "Confirmado") {
-                return res
-                    .status(400)
-                    .json({ error: "User already confirmed" });
-            }
-
-            userInSheet.set("Asistencia", "Confirmado");
-
-            await userInSheet.save();
-
-            const { error } = await EmailController.CaylinMilianiEmail({
-                userEmail: user.email.toLowerCase(),
-            });
-
-            if (error) {
-                console.log("Error to send email after create user", error);
-            }
-
-            return res.status(200).json({ message: "Attendance confirmed" });
-        } catch (error) {
-            console.log(error);
-            return res.status(500).json({ error: "Internal Server Error" });
-        }
+      return res.status(200).json({ users });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ error: "Internal Server Error" });
     }
-
-    async getLastAttendanceList(_req: Request, res: Response) {
-        try {
-            const doc = new GoogleSpreadsheet(
-                config.SHEET_ID,
-                serviceAccountAuth
-            );
-            await doc.loadInfo();
-
-            const sheet = doc.sheetsByIndex.pop();
-
-            const rows = await sheet.getRows();
-
-            const users = rows.map((row: any) => {
-                return {
-                    fullName: row
-                        .get("Nombre y Apellido")
-                        ?.toLowerCase()
-                        ?.trim(),
-                    email: row.get("Correo")?.toLowerCase()?.trim(),
-                };
-            });
-
-            if (!users || users.length === 0) {
-                return res.status(404).json({ error: "Users not found" });
-            }
-
-            return res.status(200).json({ users });
-        } catch (error) {
-            console.log(error);
-            return res.status(500).json({ error: "Internal Server Error" });
-        }
-    }
+  }
 }
 
 export default new UserController();

@@ -8,19 +8,19 @@ import { JWT } from "google-auth-library";
 const { GoogleSpreadsheet } = require("google-spreadsheet");
 
 const serviceAccountAuth = new JWT({
-    email: config.client_email,
-    key: config.private_key,
-    scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+  email: config.client_email,
+  key: config.private_key,
+  scopes: ["https://www.googleapis.com/auth/spreadsheets"],
 });
 
 class EmailController {
-    async sendEmail({ email }: { email: string }) {
-        const { error } = await resend.emails.send({
-            to: [own_email],
-            from: "info@ceominds.net",
-            cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
-            subject: "A new person has been added to the CEOminds' database. ",
-            html: `
+  async sendEmail({ email }: { email: string }) {
+    const { error } = await resend.emails.send({
+      to: [own_email],
+      from: "info@ceominds.net",
+      cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
+      subject: "A new person has been added to the CEOminds' database. ",
+      html: `
         <!DOCTYPE html>
         <html>
             <head>
@@ -119,7 +119,7 @@ class EmailController {
                 padding: 20px; /* Add padding to the container */
             }
             </style>
-            
+
             </head>
             <body style="background-color: #e9ecef;">
                 <!-- start body -->
@@ -147,7 +147,7 @@ class EmailController {
                     </td>
                     </tr>
                     <!-- end hero -->
-                
+
                     <!-- start copy block -->
                     <tr>
                     <td align="center" bgcolor="#e9ecef">
@@ -166,21 +166,21 @@ class EmailController {
                                 <p style="margin: 0;">A new user has been added to the database and to excel, you can verify it by clicking on the following button</p>
                                 <div class="button-container">
                                     <a href='${google_sheet_url}' style="display: inline-block;
-                                    padding: 10px 20px; 
-                                    background-color: #393E41; 
-                                    color: white; 
-                                    text-decoration: none; 
-                                    border: none; 
-                                    border-radius: 5px; 
+                                    padding: 10px 20px;
+                                    background-color: #393E41;
+                                    color: white;
+                                    text-decoration: none;
+                                    border: none;
+                                    border-radius: 5px;
                                     cursor: pointer;" target="_blank">
                                         Go to google sheet
                                     </a>
                                 </div>
                             </td>
-                            
+
                         </tr>
                         <!-- end message -->
-                
+
                         </table>
                         <!--[if (gte mso 9)|(IE)]>
                         </td>
@@ -190,7 +190,7 @@ class EmailController {
                     </td>
                     </tr>
                     <!-- end copy block -->
-                
+
                     <!-- start footer -->
                     <tr>
                     <td align="center" bgcolor="#e9ecef" style="padding: 24px;">
@@ -200,7 +200,7 @@ class EmailController {
                         <td align="center" valign="top" width="600">
                         <![endif]-->
                         <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
-                
+
                         </table>
                         <!--[if (gte mso 9)|(IE)]>
                         </td>
@@ -210,23 +210,23 @@ class EmailController {
                     </td>
                     </tr>
                     <!-- end footer -->
-                
+
                 </table>
                 <!-- end body -->
             </body>
         </html>
         `,
-        });
+    });
 
-        return { error };
-    }
+    return { error };
+  }
 
-    async sendPricing({ email }: { email: string }) {
-        const { error } = await resend.emails.send({
-            to: [email],
-            from: "info@ceominds.net",
-            subject: "Hola CEO Minder",
-            html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  async sendPricing({ email }: { email: string }) {
+    const { error } = await resend.emails.send({
+      to: [email],
+      from: "info@ceominds.net",
+      subject: "Hola CEO Minder",
+      html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html dir="ltr" lang="en">
   <head>
     <link
@@ -353,18 +353,18 @@ class EmailController {
   </body>
 </html>
 `,
-        });
+    });
 
-        return { error };
-    }
+    return { error };
+  }
 
-    async sendAttendance({ userEmail }: { userEmail: string }) {
-        const { error } = await resend.emails.send({
-            to: [own_email, userEmail],
-            from: "info@ceominds.net",
-            cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
-            subject: "Attendance",
-            html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  async sendAttendance({ userEmail }: { userEmail: string }) {
+    const { error } = await resend.emails.send({
+      to: [own_email, userEmail],
+      from: "info@ceominds.net",
+      cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
+      subject: "Attendance",
+      html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html dir="ltr" lang="en">
   <head>
     <link
@@ -399,22 +399,22 @@ class EmailController {
   </body>
 </html>
 `,
-        });
+    });
 
-        return { error };
-    }
+    return { error };
+  }
 
-    async sendAttendanceEmailCarolinaMontes({
-        userEmail,
-    }: {
-        userEmail: string;
-    }) {
-        const { error } = await resend.emails.send({
-            to: [own_email, userEmail],
-            from: "CEO Minds <info@ceominds.net>",
-            cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
-            subject: "Asistencia confirmada - “Carolina Montes” 24 de mayo",
-            html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  async sendAttendanceEmailCarolinaMontes({
+    userEmail,
+  }: {
+    userEmail: string;
+  }) {
+    const { error } = await resend.emails.send({
+      to: [own_email, userEmail],
+      from: "CEO Minds <info@ceominds.net>",
+      cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
+      subject: "Asistencia confirmada - “Carolina Montes” 24 de mayo",
+      html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html dir="ltr" lang="en">
   <head>
     <link
@@ -449,21 +449,21 @@ class EmailController {
   </body>
 </html>
 `,
-        });
-        return { error };
-    }
+    });
+    return { error };
+  }
 
-    async sendAttendanceEmailJoseRamonFermin({
-        userEmail,
-    }: {
-        userEmail: string;
-    }) {
-        const { error } = await resend.emails.send({
-            to: [own_email, userEmail],
-            from: "CEO Minds <info@ceominds.net>",
-            cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
-            subject: "Asistencia confirmada - “Jose Ramón Fermín” 21 de Junio",
-            html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  async sendAttendanceEmailJoseRamonFermin({
+    userEmail,
+  }: {
+    userEmail: string;
+  }) {
+    const { error } = await resend.emails.send({
+      to: [own_email, userEmail],
+      from: "CEO Minds <info@ceominds.net>",
+      cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
+      subject: "Asistencia confirmada - “Jose Ramón Fermín” 21 de Junio",
+      html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html dir="ltr" lang="en">
   <head>
     <link
@@ -498,21 +498,21 @@ class EmailController {
   </body>
 </html>
 `,
-        });
-        return { error };
-    }
+    });
+    return { error };
+  }
 
-    async sendAttendanceEmailPonenteSorpresa({
-        userEmail,
-    }: {
-        userEmail: string;
-    }) {
-        const { error } = await resend.emails.send({
-            to: [own_email, userEmail],
-            from: "CEO Minds <info@ceominds.net>",
-            cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
-            subject: "Asistencia confirmada - “Ponente Sorpresa” 19 de Julio",
-            html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  async sendAttendanceEmailPonenteSorpresa({
+    userEmail,
+  }: {
+    userEmail: string;
+  }) {
+    const { error } = await resend.emails.send({
+      to: [own_email, userEmail],
+      from: "CEO Minds <info@ceominds.net>",
+      cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
+      subject: "Asistencia confirmada - “Ponente Sorpresa” 19 de Julio",
+      html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html dir="ltr" lang="en">
   <head>
     <link
@@ -547,21 +547,21 @@ class EmailController {
   </body>
 </html>
 `,
-        });
-        return { error };
-    }
+    });
+    return { error };
+  }
 
-    async sendAttendanceEmailIsaacFernandez({
-        userEmail,
-    }: {
-        userEmail: string;
-    }) {
-        const { error } = await resend.emails.send({
-            to: [own_email, userEmail],
-            from: "CEO Minds <info@ceominds.net>",
-            cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
-            subject: "Asistencia confirmada - “Isaac Fernández” 23 de Agosto",
-            html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  async sendAttendanceEmailIsaacFernandez({
+    userEmail,
+  }: {
+    userEmail: string;
+  }) {
+    const { error } = await resend.emails.send({
+      to: [own_email, userEmail],
+      from: "CEO Minds <info@ceominds.net>",
+      cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
+      subject: "Asistencia confirmada - “Isaac Fernández” 23 de Agosto",
+      html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                     <html dir="ltr" lang="en">
                       <head>
                         <link
@@ -596,35 +596,32 @@ class EmailController {
                       </body>
                     </html>
   `,
-        });
-        return { error };
-    }
+    });
+    return { error };
+  }
 
-    async CarlosManuelEmail() {
-        try {
-            const doc = new GoogleSpreadsheet(
-                config.SHEET_ID,
-                serviceAccountAuth
-            );
+  async CarlosManuelEmail() {
+    try {
+      const doc = new GoogleSpreadsheet(config.SHEET_ID, serviceAccountAuth);
 
-            await doc.loadInfo();
+      await doc.loadInfo();
 
-            const sheet = doc.sheetsByIndex.pop();
+      const sheet = doc.sheetsByIndex.pop();
 
-            const rows = await sheet.getRows();
+      const rows = await sheet.getRows();
 
-            const emails: string[] = rows
-                .map((row: any) => {
-                    return row.get("Correo");
-                })
-                .filter((email: string) => email);
+      const emails: string[] = rows
+        .map((row: any) => {
+          return row.get("Correo");
+        })
+        .filter((email: string) => email);
 
-            const { error } = await resend.emails.send({
-                from: "CEO Minds <info@ceominds.net>",
-                to: [own_email, ...emails],
-                cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
-                subject: "Link de zoom: Micro-Hábitos con Carlos Egaña",
-                html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+      const { error } = await resend.emails.send({
+        from: "CEO Minds <info@ceominds.net>",
+        to: [own_email, ...emails],
+        cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
+        subject: "Link de zoom: Micro-Hábitos con Carlos Egaña",
+        html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                         <html dir="ltr" lang="es">
                           <head>
                             <link
@@ -823,22 +820,21 @@ class EmailController {
                           </body>
                         </html>
                 `,
-            });
+      });
 
-            if (error) throw new Error(`${error}`);
-        } catch (error) {
-            console.log(error);
-        }
+      if (error) throw new Error(`${error}`);
+    } catch (error) {
+      console.log(error);
     }
+  }
 
-    async CaylinMilianiEmail({ userEmail }: { userEmail: string }) {
-        const { error } = await resend.emails.send({
-            to: [own_email, userEmail],
-            from: "CEO Minds <info@ceominds.net>",
-            cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
-            subject:
-                "Asistencia confirmada - “Caylin Miliani” 20 de Septiembre",
-            html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/         xhtml1-transitional.dtd">
+  async CaylinMilianiEmail({ userEmail }: { userEmail: string }) {
+    const { error } = await resend.emails.send({
+      to: [own_email, userEmail],
+      from: "CEO Minds <info@ceominds.net>",
+      cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
+      subject: "Asistencia confirmada - “Caylin Miliani” 20 de Septiembre",
+      html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/         xhtml1-transitional.dtd">
 <html dir="ltr" lang="en">
   <head>
     <link
@@ -873,9 +869,68 @@ class EmailController {
   </body>
 </html>
 `,
-        });
-        return { error };
-    }
+    });
+    return { error };
+  }
+
+  async AndreinaBarrera({ userEmail }: { userEmail: string }) {
+    const { error } = await resend.emails.send({
+      to: [own_email, userEmail],
+      from: "CEO Minds <info@ceominds.net>",
+      cc: ["maykerting@gmail.com", "adri@yuppiecreativo.com"],
+      subject: "Asistencia confirmada - “Caylin Miliani” 20 de Septiembre",
+      html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+            <html dir="ltr" lang="en">
+              <head>
+                <link
+                  rel="preload"
+                  as="image"
+                  href="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/Andreina+Barrera+-+Email.png" />
+                <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+                <meta name="x-apple-disable-message-reformatting" />
+                <!--$-->
+              </head>
+              <body style="padding-top:2.5rem;padding-bottom:2.5rem">
+                <table
+                  border="0"
+                  width="100%"
+                  cellpadding="0"
+                  cellspacing="0"
+                  role="presentation"
+                  align="center">
+                  <tbody>
+                    <tr>
+                      <td style="padding-top:2.5rem;padding-bottom:2.5rem">
+                        <table
+                          align="center"
+                          width="100%"
+                          border="0"
+                          cellpadding="0"
+                          cellspacing="0"
+                          role="presentation"
+                          style="max-width:37.5em">
+                          <tbody>
+                            <tr style="width:100%">
+                              <td>
+                                <img
+                                  alt="CEOMinds Attendance"
+                                  src="https://yuppie-bucket.s3.us-east-1.amazonaws.com/ceominds/emails/Andreina+Barrera+-+Email.png"
+                                  style="border-radius:0.5rem;object-position:center;max-width:95%;max-height:95%;margin-left:auto;margin-right:auto;display:block;outline:none;border:none;text-decoration:none" />
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!--/$-->
+              </body>
+            </html>
+`,
+    });
+    return { error };
+  }
 }
 
 export default new EmailController();
